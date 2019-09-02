@@ -4,13 +4,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -19,8 +22,12 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.hakivin.submission3.R;
+import com.hakivin.submission3.db.MovieHelper;
+import com.hakivin.submission3.db.TVShowHelper;
 import com.hakivin.submission3.entity.Movie;
 import com.hakivin.submission3.entity.TVShow;
+
+import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
@@ -28,6 +35,9 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvRelease, tvRating, tvOverview;
     private ImageView imgPoster, imgBackdrop;
     private ProgressBar progressBar;
+    private MovieHelper movieHelper;
+    private TVShowHelper tvShowHelper;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +45,10 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
-        TVShow tvShow = getIntent().getParcelableExtra(EXTRA_TV);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        final Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        final TVShow tvShow = getIntent().getParcelableExtra(EXTRA_TV);
+        openHelper(movie, tvShow);
         tvRelease = findViewById(R.id.tv_release_detail);
         tvRating = findViewById(R.id.tv_rating_detail);
         tvOverview = findViewById(R.id.tv_overview_detail);
@@ -46,6 +58,70 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         showData(movie, tvShow);
+
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (tvShow == null){
+                    if (isFavourited(movie)){
+                        movieHelper.deleteMovie(movie.getId());
+                        fab.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                        Toast.makeText(getApplicationContext(), "Removed to Favourites", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        movieHelper.insertMovie(movie);
+                        Toast.makeText(getApplicationContext(), "Added from Favourites", Toast.LENGTH_LONG).show();
+                        fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    }
+                } else {
+                    if (isFavourited(tvShow)){
+                        tvShowHelper.deleteTVShow(tvShow.getId());
+                        fab.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                        Toast.makeText(getApplicationContext(), "Removed from Favourites", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        tvShowHelper.insertTVShow(tvShow);
+                        Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_LONG).show();
+                        fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+                    }
+                }
+            }
+        });
+    }
+
+    private void openHelper(Movie movie, TVShow tvShow){
+        if (tvShow == null){
+            movieHelper = MovieHelper.getInstance(getApplicationContext());
+            movieHelper.open();
+            if (isFavourited(movie)){
+                fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+            }
+        } else {
+            tvShowHelper = TVShowHelper.getInstance(getApplicationContext());
+            tvShowHelper.open();
+            if (isFavourited(tvShow)){
+                fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+            }
+        }
+    }
+
+    private boolean isFavourited(Movie movie){
+        ArrayList<Movie> list = movieHelper.getAllMovies();
+        for (Movie m : list){
+            if (m.getId() == movie.getId())
+                return true;
+        }
+        return false;
+    }
+
+    private boolean isFavourited(TVShow tvShow){
+        ArrayList<TVShow> list = tvShowHelper.getAllTVShows();
+        for (TVShow n : list){
+            if (n.getId() == tvShow.getId())
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -67,7 +143,21 @@ public class DetailActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 tvOverview.setJustificationMode(Layout.JUSTIFICATION_MODE_INTER_WORD);
             }
-            Glide.with(this).load(movie.getPoster()).apply(new RequestOptions()).into(imgPoster);
+            Glide.with(this).load(movie.getPoster())
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            showLoading(false);
+                            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_LONG).show();
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            showLoading(false);
+                            return false;
+                        }
+                    }).apply(new RequestOptions()).into(imgPoster);
             Glide.with(this).load(movie.getBackdrop()).apply(new RequestOptions()).into(imgBackdrop);
             if (getSupportActionBar() != null)
                 getSupportActionBar().setTitle(movie.getTitle());
@@ -86,6 +176,7 @@ public class DetailActivity extends AppCompatActivity {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             showLoading(false);
+                            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_LONG).show();
                             return false;
                         }
 

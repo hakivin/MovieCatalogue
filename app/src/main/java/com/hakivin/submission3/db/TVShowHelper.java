@@ -41,13 +41,13 @@ public class TVShowHelper {
         if (cursor.getCount() > 0){
             do {
                 tvShow = new TVShow();
-                tvShow.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns._ID)));
-                tvShow.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns.TITLE)));
-                tvShow.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns.POSTER)));
-                tvShow.setBackdrop(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns.BACKDROP)));
-                tvShow.setScore(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns.SCORE)));
-                tvShow.setFirstAirDate(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns.RELEASE_DATE)));
-                tvShow.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns.OVERVIEW)));
+                tvShow.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns._ID)));
+                tvShow.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns.TITLE)));
+                tvShow.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns.POSTER)));
+                tvShow.setBackdrop(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns.BACKDROP)));
+                tvShow.setScore(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns.SCORE)));
+                tvShow.setFirstAirDate(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns.FIRST_AIR_DATE)));
+                tvShow.setOverview(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns.OVERVIEW)));
                 arrayList.add(tvShow);
                 cursor.moveToNext();
             } while (!cursor.isAfterLast());
@@ -56,7 +56,7 @@ public class TVShowHelper {
         return arrayList;
     }
 
-    public long insertMovie(TVShow tvShow){
+    public long insertTVShow(TVShow tvShow){
         ContentValues args = new ContentValues();
         args.put(DatabaseContract.TVColumns._ID, tvShow.getId());
         args.put(DatabaseContract.TVColumns.TITLE, tvShow.getTitle());
@@ -68,7 +68,7 @@ public class TVShowHelper {
         return database.insert(DATABASE_TABLE, null, args);
     }
 
-    public int deleteMovie(int id){
+    public int deleteTVShow(int id){
         return database.delete(DATABASE_TABLE, DatabaseContract.TVColumns._ID + " = '" + id + "'", null);
     }
 

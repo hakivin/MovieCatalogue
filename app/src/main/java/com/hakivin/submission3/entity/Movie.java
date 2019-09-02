@@ -27,8 +27,8 @@ public class Movie implements Parcelable {
     public Movie(JSONObject object) {
         String baseUrl = "https://image.tmdb.org/t/p/";
         String imgSize = "w500/";
-
         try {
+            this.id = object.getInt("id");
             this.title = object.getString("title");
             this.poster = baseUrl + imgSize + object.getString("poster_path");
             this.backdrop = baseUrl + imgSize + object.getString("backdrop_path");

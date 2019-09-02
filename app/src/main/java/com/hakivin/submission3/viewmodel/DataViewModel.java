@@ -7,8 +7,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.hakivin.submission3.ui.main.MainActivity;
-import com.hakivin.submission3.model.Movie;
-import com.hakivin.submission3.model.TVShow;
+import com.hakivin.submission3.entity.Movie;
+import com.hakivin.submission3.entity.TVShow;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 

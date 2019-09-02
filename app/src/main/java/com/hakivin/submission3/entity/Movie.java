@@ -1,9 +1,7 @@
-package com.hakivin.submission3.model;
+package com.hakivin.submission3.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import com.hakivin.submission3.ui.main.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

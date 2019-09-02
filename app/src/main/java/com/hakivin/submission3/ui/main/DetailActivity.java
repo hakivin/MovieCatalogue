@@ -19,8 +19,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.hakivin.submission3.R;
-import com.hakivin.submission3.model.Movie;
-import com.hakivin.submission3.model.TVShow;
+import com.hakivin.submission3.entity.Movie;
+import com.hakivin.submission3.entity.TVShow;
 
 public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";

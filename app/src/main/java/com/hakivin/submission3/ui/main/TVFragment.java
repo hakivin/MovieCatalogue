@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.adapter.TVShowAdapter;
-import com.hakivin.submission3.model.TVShow;
+import com.hakivin.submission3.entity.TVShow;
 import com.hakivin.submission3.viewmodel.DataViewModel;
 
 import java.util.ArrayList;

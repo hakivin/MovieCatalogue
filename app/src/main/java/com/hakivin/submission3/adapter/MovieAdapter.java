@@ -14,7 +14,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.hakivin.submission3.ui.main.DetailActivity;
 import com.hakivin.submission3.ui.main.MainActivity;
 import com.hakivin.submission3.R;
-import com.hakivin.submission3.model.Movie;
+import com.hakivin.submission3.entity.Movie;
 
 import java.util.ArrayList;
 

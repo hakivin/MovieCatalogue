@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.hakivin.submission3.R;
-import com.hakivin.submission3.model.TVShow;
+import com.hakivin.submission3.entity.TVShow;
 import com.hakivin.submission3.ui.main.DetailActivity;
 import com.hakivin.submission3.ui.main.MainActivity;
 

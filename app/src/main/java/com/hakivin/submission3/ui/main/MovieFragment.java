@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.adapter.MovieAdapter;
-import com.hakivin.submission3.model.Movie;
+import com.hakivin.submission3.entity.Movie;
 import com.hakivin.submission3.viewmodel.DataViewModel;
 
 import java.util.ArrayList;

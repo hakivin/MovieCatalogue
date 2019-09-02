@@ -27,6 +27,11 @@ public class TVShow implements Parcelable {
         }
 
     }
+
+    public TVShow() {
+
+    }
+
     public int getId() {
         return id;
     }

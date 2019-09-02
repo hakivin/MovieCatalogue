@@ -8,15 +8,6 @@ import org.json.JSONObject;
 
 public class Movie implements Parcelable {
     private int id;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     private String title;
     private String poster;
     private String backdrop;
@@ -38,6 +29,18 @@ public class Movie implements Parcelable {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public Movie() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

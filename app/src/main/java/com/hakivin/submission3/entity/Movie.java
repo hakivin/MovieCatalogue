@@ -7,6 +7,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Movie implements Parcelable {
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private String title;
     private String poster;
     private String backdrop;
@@ -14,14 +24,14 @@ public class Movie implements Parcelable {
     private String releaseDate;
     private String overview;
 
-    public Movie(JSONObject object){
+    public Movie(JSONObject object) {
         String baseUrl = "https://image.tmdb.org/t/p/";
         String imgSize = "w500/";
 
         try {
             this.title = object.getString("title");
-            this.poster = baseUrl+imgSize+object.getString("poster_path");
-            this.backdrop = baseUrl+imgSize+object.getString("backdrop_path");
+            this.poster = baseUrl + imgSize + object.getString("poster_path");
+            this.backdrop = baseUrl + imgSize + object.getString("backdrop_path");
             this.score = String.valueOf(object.getDouble("vote_average"));
             this.releaseDate = object.getString("release_date");
             this.overview = object.getString("overview");
@@ -78,6 +88,7 @@ public class Movie implements Parcelable {
         this.overview = overview;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -85,6 +96,7 @@ public class Movie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
         dest.writeString(this.title);
         dest.writeString(this.poster);
         dest.writeString(this.backdrop);
@@ -93,10 +105,8 @@ public class Movie implements Parcelable {
         dest.writeString(this.overview);
     }
 
-    public Movie() {
-    }
-
     protected Movie(Parcel in) {
+        this.id = in.readInt();
         this.title = in.readString();
         this.poster = in.readString();
         this.backdrop = in.readString();

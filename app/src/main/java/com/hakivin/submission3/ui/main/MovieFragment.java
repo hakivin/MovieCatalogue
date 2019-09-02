@@ -8,10 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.adapter.MovieAdapter;
@@ -59,11 +62,9 @@ public class MovieFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         adapter = new MovieAdapter();
         adapter.notifyDataSetChanged();
-
         RecyclerView recyclerView = view.findViewById(R.id.rv_movie);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
         progressBar = view.findViewById(R.id.progress_bar_movie);
     }
 

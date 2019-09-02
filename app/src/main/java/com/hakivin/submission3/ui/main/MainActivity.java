@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.hakivin.submission3.BuildConfig;
 import com.hakivin.submission3.R;
@@ -50,9 +49,11 @@ public class MainActivity extends AppCompatActivity {
             Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
             startActivity(mIntent);
         }
+
         else if (item.getItemId() == R.id.favourites){
-            Toast.makeText(this, "Simpen dulu", Toast.LENGTH_LONG).show();
+
         }
+
         return super.onOptionsItemSelected(item);
     }
 

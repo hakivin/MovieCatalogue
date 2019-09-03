@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,13 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.adapter.MovieAdapter;
-import com.hakivin.submission3.adapter.TVShowAdapter;
 import com.hakivin.submission3.entity.Movie;
-import com.hakivin.submission3.entity.TVShow;
 import com.hakivin.submission3.viewmodel.DataViewModel;
 
 import java.util.ArrayList;
@@ -31,10 +27,14 @@ public class MovieFragment extends Fragment {
 
     private MovieAdapter adapter;
     private ProgressBar progressBar;
-    private RecyclerView recyclerView;
+    private static DataViewModel mViewModel;
 
     public static MovieFragment newInstance() {
         return new MovieFragment();
+    }
+
+    public static DataViewModel getmViewModel(){
+        return mViewModel;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MovieFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        DataViewModel mViewModel = ViewModelProviders.of(this).get(DataViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(DataViewModel.class);
         mViewModel.getMovies().observe(this, getMovie);
         mViewModel.setMovies();
         showLoading(true);
@@ -67,11 +67,10 @@ public class MovieFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         adapter = new MovieAdapter();
         adapter.notifyDataSetChanged();
-        recyclerView = view.findViewById(R.id.rv_movie);
+        RecyclerView recyclerView = view.findViewById(R.id.rv_movie);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         progressBar = view.findViewById(R.id.progress_bar_movie);
-        clicked = false;
     }
 
     @Override
@@ -85,31 +84,10 @@ public class MovieFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private boolean clicked;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.favourites){
-            //Toast.makeText(getContext(), "Berhasil terpencet", Toast.LENGTH_LONG).show();
-            if (!clicked){
-                showLoading(true);
-                TVShowAdapter adapter = new TVShowAdapter();
-                adapter.notifyDataSetChanged();
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(adapter);
-                showLoading(false);
-                clicked = true;
-                Log.d(MovieFragment.class.getSimpleName(), clicked + " value at clicked");
-            } else {
-                showLoading(true);
-                MovieAdapter adapter = new MovieAdapter();
-                adapter.notifyDataSetChanged();
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(adapter);
-                showLoading(false);
-                clicked = false;
-                Log.d(MovieFragment.class.getSimpleName(), clicked + " value at clicked");
-            }
-        }
+        if (item.getItemId() == R.id.home)
+            showLoading(true);
         return super.onOptionsItemSelected(item);
     }
 

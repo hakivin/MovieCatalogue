@@ -111,4 +111,5 @@
     <string name="dec">December</string>
     <string name="empty">Overview is not set by API provider</string>
     <string name="favorite">Favourites</string>
+
 </resources>

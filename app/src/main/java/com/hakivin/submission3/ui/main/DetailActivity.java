@@ -64,27 +64,24 @@ public class DetailActivity extends AppCompatActivity {
                 if (tvShow == null){
                     if (isFavourited(movie)){
                         movieHelper.deleteMovie(movie.getId());
-                        //fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_24dp));
                         Toast.makeText(getApplicationContext(), "Removed to Favourites", Toast.LENGTH_LONG).show();
 
                     } else {
                         movieHelper.insertMovie(movie);
                         Toast.makeText(getApplicationContext(), "Added from Favourites", Toast.LENGTH_LONG).show();
-                        //fab.setImageResource(R.drawable.ic_favorite_red_24dp);
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
                     }
                 } else {
                     if (isFavourited(tvShow)){
                         tvShowHelper.deleteTVShow(tvShow.getId());
-                        //fab.setImageResource(R.drawable.ic_favorite_black_24dp);
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_24dp));
                         Toast.makeText(getApplicationContext(), "Removed from Favourites", Toast.LENGTH_LONG).show();
 
                     } else {
                         tvShowHelper.insertTVShow(tvShow);
                         Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_LONG).show();
-                        //fab.setImageResource(R.drawable.ic_favorite_red_24dp);
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
                     }
                 }

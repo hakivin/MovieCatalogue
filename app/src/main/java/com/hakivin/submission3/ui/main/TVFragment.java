@@ -8,7 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -24,9 +28,14 @@ public class TVFragment extends Fragment {
 
     private TVShowAdapter adapter;
     private ProgressBar progressBar;
+    private static DataViewModel mViewModel;
 
     public static TVFragment newInstance() {
         return new TVFragment();
+    }
+
+    public static DataViewModel getmViewModel(){
+        return mViewModel;
     }
 
     @Override
@@ -38,9 +47,9 @@ public class TVFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        DataViewModel mViewModel = ViewModelProviders.of(this).get(DataViewModel.class);
-        mViewModel.getTVShow().observe(this, getTV);
-        mViewModel.setTVShow();
+        mViewModel = ViewModelProviders.of(this).get(DataViewModel.class);
+        mViewModel.getTVShows().observe(this, getTV);
+        mViewModel.setTVShows();
         showLoading(true);
     }
 
@@ -49,7 +58,6 @@ public class TVFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         adapter = new TVShowAdapter();
         adapter.notifyDataSetChanged();
-
         RecyclerView recyclerView = view.findViewById(R.id.rv_tv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -65,6 +73,24 @@ public class TVFragment extends Fragment {
             showLoading(false);
         }
     };
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.home)
+            showLoading(true);
+        return super.onOptionsItemSelected(item);
+    }
 
     private void showLoading(Boolean state) {
         if (state) {

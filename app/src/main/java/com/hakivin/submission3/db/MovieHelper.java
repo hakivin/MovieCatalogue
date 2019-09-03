@@ -6,8 +6,11 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.hakivin.submission3.entity.Movie;
+import com.hakivin.submission3.ui.main.MainActivity;
 
 import java.util.ArrayList;
 
@@ -35,10 +38,11 @@ public class MovieHelper {
 
     public ArrayList<Movie> getAllMovies(){
         ArrayList<Movie> arrayList = new ArrayList<>();
-        Cursor cursor = database.query(DATABASE_TABLE, null, null, null, null, null, null, null);
-        cursor.moveToFirst();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + DATABASE_TABLE + ";", null);
         Movie movie;
+        Log.d(MovieHelper.class.getSimpleName(), String.valueOf(cursor.getCount()));
         if (cursor.getCount() > 0){
+            cursor.moveToFirst();
             do {
                 movie = new Movie();
                 movie.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns._ID)));

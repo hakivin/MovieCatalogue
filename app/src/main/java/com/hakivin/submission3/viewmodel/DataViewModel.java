@@ -3,9 +3,12 @@ package com.hakivin.submission3.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hakivin.submission3.db.MovieHelper;
+import com.hakivin.submission3.db.TVShowHelper;
 import com.hakivin.submission3.ui.main.MainActivity;
 import com.hakivin.submission3.entity.Movie;
 import com.hakivin.submission3.entity.TVShow;
@@ -29,7 +32,7 @@ public class DataViewModel extends ViewModel {
     public LiveData<ArrayList<Movie>> getMovies(){
         return listMovies;
     }
-    public LiveData<ArrayList<TVShow>> getTVShow(){ return listTV; }
+    public LiveData<ArrayList<TVShow>> getTVShows(){ return listTV; }
 
     public void setMovies(){
         AsyncHttpClient client = new AsyncHttpClient();
@@ -67,7 +70,7 @@ public class DataViewModel extends ViewModel {
         });
     }
 
-    public void setTVShow(){
+    public void setTVShows(){
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<TVShow> list = new ArrayList<>();
         Locale locale = MainActivity.getContext().getResources().getConfiguration().locale;
@@ -101,5 +104,23 @@ public class DataViewModel extends ViewModel {
                 listTV.postValue(list);
             }
         });
+    }
+
+    public void setMoviesFromDB(Context context){
+        MovieHelper helper = MovieHelper.getInstance(context);
+        helper.open();
+        ArrayList<Movie> list = helper.getAllMovies();
+        listMovies.postValue(list);
+        if (list.isEmpty())
+            Toast.makeText(context, "Your favourite list is empty", Toast.LENGTH_LONG).show();
+    }
+
+    public void setTVShowsFromDB(Context context){
+        TVShowHelper helper = TVShowHelper.getInstance(context);
+        helper.open();
+        ArrayList<TVShow> list = helper.getAllTVShows();
+        listTV.postValue(list);
+        if (list.isEmpty())
+            Toast.makeText(context, "Your favourite list is empty", Toast.LENGTH_LONG).show();
     }
 }

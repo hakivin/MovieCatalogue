@@ -34,15 +34,15 @@ public class TVShowAdapter extends RecyclerView.Adapter<TVShowAdapter.TVShowView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TVShowViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final TVShowViewHolder holder, int position) {
         final TVShow tvShow = this.list.get(position);
         holder.bind(tvShow);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.getContext(), DetailActivity.class);
+                Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
                 intent.putExtra(DetailActivity.EXTRA_TV, tvShow);
-                MainActivity.getContext().startActivity(intent);
+                holder.itemView.getContext().startActivity(intent);
             }
         });
     }

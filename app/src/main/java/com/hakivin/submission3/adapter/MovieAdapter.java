@@ -34,15 +34,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MovieViewHolder holder, int position) {
         final Movie movie = this.list.get(position);
         holder.bind(movie);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.getContext(), DetailActivity.class);
+                Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
                 intent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
-                MainActivity.getContext().startActivity(intent);
+                holder.itemView.getContext().startActivity(intent);
             }
         });
     }

@@ -49,11 +49,6 @@ public class MainActivity extends AppCompatActivity {
             Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
             startActivity(mIntent);
         }
-
-        else if (item.getItemId() == R.id.favourites){
-
-        }
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -59,31 +58,34 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         showData(movie, tvShow);
 
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tvShow == null){
                     if (isFavourited(movie)){
                         movieHelper.deleteMovie(movie.getId());
-                        fab.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                        //fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_24dp));
                         Toast.makeText(getApplicationContext(), "Removed to Favourites", Toast.LENGTH_LONG).show();
 
                     } else {
                         movieHelper.insertMovie(movie);
                         Toast.makeText(getApplicationContext(), "Added from Favourites", Toast.LENGTH_LONG).show();
-                        fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        //fab.setImageResource(R.drawable.ic_favorite_red_24dp);
+                        fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
                     }
                 } else {
                     if (isFavourited(tvShow)){
                         tvShowHelper.deleteTVShow(tvShow.getId());
-                        fab.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                        //fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_24dp));
                         Toast.makeText(getApplicationContext(), "Removed from Favourites", Toast.LENGTH_LONG).show();
 
                     } else {
                         tvShowHelper.insertTVShow(tvShow);
                         Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_LONG).show();
-                        fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        //fab.setImageResource(R.drawable.ic_favorite_red_24dp);
+                        fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
                     }
                 }
             }
@@ -95,13 +97,13 @@ public class DetailActivity extends AppCompatActivity {
             movieHelper = MovieHelper.getInstance(getApplicationContext());
             movieHelper.open();
             if (isFavourited(movie)){
-                fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+                fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
             }
         } else {
             tvShowHelper = TVShowHelper.getInstance(getApplicationContext());
             tvShowHelper.open();
             if (isFavourited(tvShow)){
-                fab.setImageResource(R.drawable.ic_favorite_black_24dp);
+                fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
             }
         }
     }

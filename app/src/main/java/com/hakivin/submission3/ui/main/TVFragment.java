@@ -49,7 +49,15 @@ public class TVFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(DataViewModel.class);
         mViewModel.getTVShows().observe(this, getTV);
-        mViewModel.setTVShows();
+        if (savedInstanceState == null) {
+            mViewModel.setTVShows();
+        } else {
+            if (MainActivity.isIsClicked()){
+                mViewModel.setTVShowsFromDB(getContext());
+            } else {
+                mViewModel.setTVShows();
+            }
+        }
         showLoading(true);
     }
 

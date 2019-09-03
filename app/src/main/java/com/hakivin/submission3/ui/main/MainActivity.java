@@ -38,18 +38,25 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
         context = this;
-        Log.d(MainActivity.class.getSimpleName(), String.valueOf(isClicked));
+        if (savedInstanceState != null){
+            isClicked = savedInstanceState.getBoolean(EXTRA_STATE);
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(EXTRA_STATE, isClicked);
-        Log.d(MainActivity.class.getSimpleName(), String.valueOf(isClicked));
     }
 
-    private boolean isClicked;
+    private static boolean isClicked;
+
+    public static boolean isIsClicked() {
+        return isClicked;
+    }
+
     private MenuItem favourite, home;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.setting_menu, menu);
@@ -58,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    DataViewModel movieDataViewModel = MovieFragment.getmViewModel();
+    DataViewModel TVDataViewModel = TVFragment.getmViewModel();
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         DataViewModel movieDataViewModel = MovieFragment.getmViewModel();

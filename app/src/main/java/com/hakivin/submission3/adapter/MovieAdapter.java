@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.hakivin.submission3.ui.main.DetailActivity;
-import com.hakivin.submission3.ui.main.MainActivity;
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.entity.Movie;
 
@@ -25,6 +24,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.list.clear();
         this.list.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<Movie> getList(){
+        return list;
     }
     @NonNull
     @Override

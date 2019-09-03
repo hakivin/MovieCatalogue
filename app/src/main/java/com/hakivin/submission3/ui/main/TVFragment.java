@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,12 +50,6 @@ public class TVFragment extends Fragment {
         mViewModel.getTVShows().observe(this, getTV);
         if (savedInstanceState == null) {
             mViewModel.setTVShows();
-        } else {
-            if (MainActivity.isIsClicked()){
-                mViewModel.setTVShowsFromDB(getContext());
-            } else {
-                mViewModel.setTVShows();
-            }
         }
         showLoading(true);
     }
@@ -91,6 +84,13 @@ public class TVFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onResume() {
+        if (MainActivity.isIsClicked())
+            mViewModel.setTVShowsFromDB(getContext());
+        super.onResume();
     }
 
     @Override

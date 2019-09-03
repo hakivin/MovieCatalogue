@@ -8,7 +8,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,6 +19,7 @@ import com.hakivin.submission3.viewmodel.DataViewModel;
 public class MainActivity extends AppCompatActivity {
     private static Context context;
     private static final String EXTRA_STATE = "EXTRA_STATE";
+    private static boolean onFirst = false;
 
     public static Context getContext(){
         return context;
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         if (savedInstanceState != null){
             isClicked = savedInstanceState.getBoolean(EXTRA_STATE);
+        } else {
+            isClicked = false;
         }
     }
 
@@ -65,8 +67,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    DataViewModel movieDataViewModel = MovieFragment.getmViewModel();
-    DataViewModel TVDataViewModel = TVFragment.getmViewModel();
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         DataViewModel movieDataViewModel = MovieFragment.getmViewModel();
@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.setting:
                 Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+                onFirst = true;
                 startActivity(mIntent);
                 break;
             case R.id.favourites:
@@ -90,6 +91,22 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        if (onFirst){
+            onFirst = false;
+            restart();
+        }
+
+        super.onResume();
+    }
+
+    private void restart(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

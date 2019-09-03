@@ -7,11 +7,12 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hakivin.submission3.R;
 import com.hakivin.submission3.db.MovieHelper;
 import com.hakivin.submission3.db.TVShowHelper;
-import com.hakivin.submission3.ui.main.MainActivity;
 import com.hakivin.submission3.entity.Movie;
 import com.hakivin.submission3.entity.TVShow;
+import com.hakivin.submission3.ui.main.MainActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -39,6 +40,7 @@ public class DataViewModel extends ViewModel {
         final ArrayList<Movie> list = new ArrayList<>();
         Locale locale = MainActivity.getContext().getResources().getConfiguration().locale;
         String lang = locale.toLanguageTag();
+        Log.d("locale : ", lang);
         String url = "https://api.themoviedb.org/3/movie/upcoming?api_key="+API+"&language="+lang;
 
         client.get(url, new AsyncHttpResponseHandler() {
@@ -112,7 +114,7 @@ public class DataViewModel extends ViewModel {
         ArrayList<Movie> list = helper.getAllMovies();
         listMovies.postValue(list);
         if (list.isEmpty())
-            Toast.makeText(context, "Your favourite list is empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.empty_list), Toast.LENGTH_LONG).show();
     }
 
     public void setTVShowsFromDB(Context context){
@@ -121,6 +123,6 @@ public class DataViewModel extends ViewModel {
         ArrayList<TVShow> list = helper.getAllTVShows();
         listTV.postValue(list);
         if (list.isEmpty())
-            Toast.makeText(context, "Your favourite list is empty", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.empty_list), Toast.LENGTH_LONG).show();
     }
 }

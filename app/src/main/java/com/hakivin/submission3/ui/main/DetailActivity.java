@@ -62,9 +62,8 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (tvShow == null){
-                    if (isFavourited(movie)){
+                    if (isFavoured(movie)){
                         movieHelper.deleteMovie(movie.getId());
-
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_24dp));
                         Toast.makeText(getApplicationContext(), "Removed to Favourites", Toast.LENGTH_LONG).show();
 
@@ -74,7 +73,7 @@ public class DetailActivity extends AppCompatActivity {
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
                     }
                 } else {
-                    if (isFavourited(tvShow)){
+                    if (isFavoured(tvShow)){
                         tvShowHelper.deleteTVShow(tvShow.getId());
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_24dp));
                         Toast.makeText(getApplicationContext(), "Removed from Favourites", Toast.LENGTH_LONG).show();
@@ -93,19 +92,19 @@ public class DetailActivity extends AppCompatActivity {
         if (tvShow == null){
             movieHelper = MovieHelper.getInstance(getApplicationContext());
             movieHelper.open();
-            if (isFavourited(movie)){
+            if (isFavoured(movie)){
                 fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
             }
         } else {
             tvShowHelper = TVShowHelper.getInstance(getApplicationContext());
             tvShowHelper.open();
-            if (isFavourited(tvShow)){
+            if (isFavoured(tvShow)){
                 fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
             }
         }
     }
 
-    private boolean isFavourited(Movie movie){
+    private boolean isFavoured(Movie movie){
         ArrayList<Movie> list = movieHelper.getAllMovies();
         for (Movie m : list){
             if (m.getId() == movie.getId())
@@ -114,7 +113,7 @@ public class DetailActivity extends AppCompatActivity {
         return false;
     }
 
-    private boolean isFavourited(TVShow tvShow){
+    private boolean isFavoured(TVShow tvShow){
         ArrayList<TVShow> list = tvShowHelper.getAllTVShows();
         for (TVShow n : list){
             if (n.getId() == tvShow.getId())

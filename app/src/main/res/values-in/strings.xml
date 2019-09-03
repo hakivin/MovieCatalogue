@@ -111,4 +111,5 @@
     <string name="dec">Desember</string>
     <string name="empty">Sinopsis tidak ditampilkan oleh penyedia data</string>
     <string name="favorite">Favorit</string>
+    <string name="empty_list">Daftar favorit masih kosong</string>
 </resources>

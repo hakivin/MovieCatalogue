@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -51,13 +50,6 @@ public class MovieFragment extends Fragment {
         mViewModel.getMovies().observe(this, getMovie);
         if (savedInstanceState == null) {
             mViewModel.setMovies();
-        } else {
-            if (MainActivity.isIsClicked()){
-                mViewModel.setMoviesFromDB(getContext());
-            } else {
-                mViewModel.setMovies();
-            }
-
         }
         showLoading(true);
         // TODO: Use the ViewModel
@@ -87,11 +79,6 @@ public class MovieFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-//        if (savedInstanceState != null){
-//            ArrayList<Movie> list = savedInstanceState.getParcelableArrayList("EXTRA");
-//            Log.d(MovieFragment.class.getSimpleName(), String.valueOf(list.isEmpty()));
-//            adapter.setList(list);
-//        }
     }
 
     @Override
@@ -100,9 +87,10 @@ public class MovieFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("EXTRA", adapter.getList());
+    public void onResume() {
+        if (MainActivity.isIsClicked())
+            mViewModel.setMoviesFromDB(getContext());
+        super.onResume();
     }
 
     @Override

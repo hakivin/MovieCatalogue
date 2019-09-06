@@ -1,8 +1,8 @@
 package com.hakivin.submission3.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -57,7 +58,7 @@ public class DataViewModel extends ViewModel {
                     }
                     listMovies.postValue(list);
                 } catch (Exception e){
-                    Log.d("Exception", e.getMessage());
+                    Log.d("Exception", Objects.requireNonNull(e.getMessage()));
                     Toast.makeText(MainActivity.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     listMovies.postValue(list);
                 }
@@ -65,7 +66,7 @@ public class DataViewModel extends ViewModel {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.d("onFailure", error.getMessage());
+                Log.d("onFailure", Objects.requireNonNull(error.getMessage()));
                 Toast.makeText(MainActivity.getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 listMovies.postValue(list);
             }
@@ -93,7 +94,7 @@ public class DataViewModel extends ViewModel {
                     }
                     listTV.postValue(list);
                 } catch (Exception e){
-                    Log.d("Exception", e.getMessage());
+                    Log.d("Exception", Objects.requireNonNull(e.getMessage()));
                     Toast.makeText(MainActivity.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     listTV.postValue(list);
                 }
@@ -101,7 +102,7 @@ public class DataViewModel extends ViewModel {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.d("onFailure", error.getMessage());
+                Log.d("onFailure", Objects.requireNonNull(error.getMessage()));
                 Toast.makeText(MainActivity.getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 listTV.postValue(list);
             }

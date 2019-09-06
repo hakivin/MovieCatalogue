@@ -3,10 +3,10 @@ package com.hakivin.submission3.ui.main;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Layout;
 import android.view.View;
 import android.widget.ImageView;
@@ -64,11 +64,13 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (tvShow == null){
                     if (isFavoured(movie)){
+                        assert movie != null;
                         movieHelper.deleteMovie(movie.getId());
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_24dp));
                         Toast.makeText(getApplicationContext(), getString(R.string.removed), Toast.LENGTH_LONG).show();
 
                     } else {
+                        assert movie != null;
                         movieHelper.insertMovie(movie);
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
                         Toast.makeText(getApplicationContext(), getString(R.string.added), Toast.LENGTH_LONG).show();

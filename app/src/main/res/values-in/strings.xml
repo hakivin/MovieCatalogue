@@ -26,4 +26,7 @@
     <string name="removed">Dihapus dari daftar Favorit</string>
     <string name="added">Ditambahkan ke daftar Favorit</string>
     <string name="check_internet">Periksa kembali koneksi internet anda</string>
+    <string name="search">Cari</string>
+    <string name="home">Home</string>
+    <string name="backdrop_image">Backdrop Image</string>
 </resources>

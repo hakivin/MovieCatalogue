@@ -3,13 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/search_bar"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+
+    <item
         android:id="@+id/favourites"
         android:title="@string/favorite"
         android:icon="@drawable/ic_favorite_red_24dp"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/home"
-        android:title="home"
+        android:title="@string/home"
         android:icon="@drawable/ic_home_black_24dp"
         app:showAsAction="always"/>
     <item

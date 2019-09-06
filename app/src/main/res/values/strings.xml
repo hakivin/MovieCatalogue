@@ -26,5 +26,8 @@
     <string name="removed">Removed from Favourites</string>
     <string name="added">Added to Favourites</string>
     <string name="check_internet">Check your internet connection</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="backdrop_image">Backdrop Image</string>
 
 </resources>

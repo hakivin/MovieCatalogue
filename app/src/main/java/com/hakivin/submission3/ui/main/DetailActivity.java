@@ -27,6 +27,7 @@ import com.hakivin.submission3.entity.Movie;
 import com.hakivin.submission3.entity.TVShow;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
@@ -42,9 +43,9 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         final Movie movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
         final TVShow tvShow = getIntent().getParcelableExtra(EXTRA_TV);
         openHelper(movie, tvShow);
@@ -54,7 +55,7 @@ public class DetailActivity extends AppCompatActivity {
         imgPoster = findViewById(R.id.img_poster_detail);
         imgBackdrop = findViewById(R.id.img_backdrop_detail);
         progressBar = findViewById(R.id.loading);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         showData(movie, tvShow);
 
@@ -65,23 +66,23 @@ public class DetailActivity extends AppCompatActivity {
                     if (isFavoured(movie)){
                         movieHelper.deleteMovie(movie.getId());
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_24dp));
-                        Toast.makeText(getApplicationContext(), "Removed to Favourites", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.removed), Toast.LENGTH_LONG).show();
 
                     } else {
                         movieHelper.insertMovie(movie);
-                        Toast.makeText(getApplicationContext(), "Added from Favourites", Toast.LENGTH_LONG).show();
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
+                        Toast.makeText(getApplicationContext(), getString(R.string.added), Toast.LENGTH_LONG).show();
                     }
                 } else {
                     if (isFavoured(tvShow)){
                         tvShowHelper.deleteTVShow(tvShow.getId());
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_black_24dp));
-                        Toast.makeText(getApplicationContext(), "Removed from Favourites", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.removed), Toast.LENGTH_LONG).show();
 
                     } else {
                         tvShowHelper.insertTVShow(tvShow);
-                        Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_LONG).show();
                         fab.setImageDrawable(getDrawable(R.drawable.ic_favorite_red_24dp));
+                        Toast.makeText(getApplicationContext(), getString(R.string.added), Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -146,7 +147,7 @@ public class DetailActivity extends AppCompatActivity {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             showLoading(false);
-                            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), R.string.check_internet, Toast.LENGTH_LONG).show();
                             return false;
                         }
 
@@ -174,7 +175,7 @@ public class DetailActivity extends AppCompatActivity {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             showLoading(false);
-                            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), getString(R.string.check_internet), Toast.LENGTH_LONG).show();
                             return false;
                         }
 
@@ -203,32 +204,44 @@ public class DetailActivity extends AppCompatActivity {
         String[] dates = date.split("-");
         String year = dates[0];
         String day = dates[2];
-        String month = null;
-        switch(dates[1]){
+        String month = dates[1];
+        switch(month){
             case "01":
                 month = getString(R.string.jan);
+                break;
             case "02":
                 month = getString(R.string.feb);
+                break;
             case "03":
                 month = getString(R.string.mar);
+                break;
             case "04":
                 month = getString(R.string.apr);
+                break;
             case "05":
                 month = getString(R.string.may);
+                break;
             case "06":
                 month = getString(R.string.jun);
+                break;
             case "07":
                 month = getString(R.string.jul);
+                break;
             case "08":
                 month = getString(R.string.aug);
+                break;
             case "09":
                 month = getString(R.string.sep);
+                break;
             case "10":
                 month = getString(R.string.oct);
+                break;
             case "11":
                 month = getString(R.string.nov);
+                break;
             case "12":
                 month = getString(R.string.dec);
+                break;
         }
         return month + " " + day + ", " + year;
     }

@@ -1,5 +1,6 @@
 package com.hakivin.submission3.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.hakivin.submission3.adapter.SectionsPagerAdapter;
 import com.hakivin.submission3.viewmodel.DataViewModel;
 
 public class MainActivity extends AppCompatActivity {
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private static final String EXTRA_STATE = "EXTRA_STATE";
     private static boolean onFirst = false;

@@ -2,7 +2,7 @@ package com.hakivin.submission3.db;
 
 import android.provider.BaseColumns;
 
-public class DatabaseContract {
+class DatabaseContract {
     static String TABLE_MOVIE = "movie";
     static String TABLE_TV = "tvshow";
 

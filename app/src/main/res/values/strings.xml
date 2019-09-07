@@ -29,5 +29,6 @@
     <string name="search">Search</string>
     <string name="home">Home</string>
     <string name="backdrop_image">Backdrop Image</string>
+    <string name="insert">Insert title</string>
 
 </resources>

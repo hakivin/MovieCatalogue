@@ -1,7 +1,11 @@
 package com.hakivin.submission3.ui.main;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +26,7 @@ import com.hakivin.submission3.entity.TVShow;
 import com.hakivin.submission3.viewmodel.DataViewModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TVFragment extends Fragment {
 
@@ -84,6 +89,47 @@ public class TVFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        MenuItem search = menu.findItem(R.id.search_bar);
+        SearchManager searchManager = (SearchManager) Objects.requireNonNull(getActivity()).getSystemService(Context.SEARCH_SERVICE);
+        if (searchManager != null){
+            final SearchView searchView = (SearchView) (menu.findItem(R.id.search_bar)).getActionView();
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+            searchView.setQueryHint(getResources().getString(R.string.insert));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    showLoading(true);
+                    mViewModel.setTVShowsFromSearch(query);
+                    searchView.clearFocus();
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    mViewModel.setEmptyTVShow();
+                    return true;
+                }
+            });
+        }
+        search.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                showLoading(true);
+                mViewModel.setTVShows();
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void onDestroyOptionsMenu() {
+        super.onDestroyOptionsMenu();
+        mViewModel.setTVShows();
     }
 
     @Override

@@ -5,15 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
-import com.google.android.material.tabs.TabLayout;
-
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.hakivin.submission3.BuildConfig;
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.adapter.SectionsPagerAdapter;
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
+
         context = this;
         if (savedInstanceState != null){
             isClicked = savedInstanceState.getBoolean(EXTRA_STATE);
@@ -61,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         return isClicked;
     }
 
-    private MenuItem favourite, home;
+    private MenuItem favourite;
+    private MenuItem home;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

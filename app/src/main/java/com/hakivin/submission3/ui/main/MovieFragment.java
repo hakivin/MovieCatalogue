@@ -1,13 +1,8 @@
 package com.hakivin.submission3.ui.main;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,12 +11,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.adapter.MovieAdapter;
 import com.hakivin.submission3.entity.Movie;
 import com.hakivin.submission3.viewmodel.DataViewModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MovieFragment extends Fragment {
 
@@ -52,7 +57,6 @@ public class MovieFragment extends Fragment {
             mViewModel.setMovies();
         }
         showLoading(true);
-        // TODO: Use the ViewModel
     }
 
     private Observer<ArrayList<Movie>> getMovie = new Observer<ArrayList<Movie>>() {
@@ -84,6 +88,47 @@ public class MovieFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        MenuItem search = menu.findItem(R.id.search_bar);
+        SearchManager searchManager = (SearchManager) Objects.requireNonNull(getActivity()).getSystemService(Context.SEARCH_SERVICE);
+        if (searchManager != null){
+            final SearchView searchView = (SearchView) (menu.findItem(R.id.search_bar)).getActionView();
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+            searchView.setQueryHint(getResources().getString(R.string.insert));
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    showLoading(true);
+                    mViewModel.setMoviesFromSearch(query);
+                    searchView.clearFocus();
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    mViewModel.setEmptyMovie();
+                    return true;
+                }
+            });
+        }
+        search.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                showLoading(true);
+                mViewModel.setMovies();
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void onDestroyOptionsMenu() {
+        super.onDestroyOptionsMenu();
+        mViewModel.setMovies();
     }
 
     @Override
@@ -107,5 +152,4 @@ public class MovieFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
         }
     }
-
 }

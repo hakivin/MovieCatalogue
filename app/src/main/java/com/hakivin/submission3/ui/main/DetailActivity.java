@@ -202,49 +202,52 @@ public class DetailActivity extends AppCompatActivity {
         }
     }
 
-    private String convertDate(String date){
+    private String convertDate(String date) {
         String[] dates = date.split("-");
-        String year = dates[0];
-        String day = dates[2];
-        String month = dates[1];
-        switch(month){
-            case "01":
-                month = getString(R.string.jan);
-                break;
-            case "02":
-                month = getString(R.string.feb);
-                break;
-            case "03":
-                month = getString(R.string.mar);
-                break;
-            case "04":
-                month = getString(R.string.apr);
-                break;
-            case "05":
-                month = getString(R.string.may);
-                break;
-            case "06":
-                month = getString(R.string.jun);
-                break;
-            case "07":
-                month = getString(R.string.jul);
-                break;
-            case "08":
-                month = getString(R.string.aug);
-                break;
-            case "09":
-                month = getString(R.string.sep);
-                break;
-            case "10":
-                month = getString(R.string.oct);
-                break;
-            case "11":
-                month = getString(R.string.nov);
-                break;
-            case "12":
-                month = getString(R.string.dec);
-                break;
+        if (dates.length == 3) {
+            String year = dates[0];
+            String day = dates[2];
+            String month = dates[1];
+            switch (month) {
+                case "01":
+                    month = getString(R.string.jan);
+                    break;
+                case "02":
+                    month = getString(R.string.feb);
+                    break;
+                case "03":
+                    month = getString(R.string.mar);
+                    break;
+                case "04":
+                    month = getString(R.string.apr);
+                    break;
+                case "05":
+                    month = getString(R.string.may);
+                    break;
+                case "06":
+                    month = getString(R.string.jun);
+                    break;
+                case "07":
+                    month = getString(R.string.jul);
+                    break;
+                case "08":
+                    month = getString(R.string.aug);
+                    break;
+                case "09":
+                    month = getString(R.string.sep);
+                    break;
+                case "10":
+                    month = getString(R.string.oct);
+                    break;
+                case "11":
+                    month = getString(R.string.nov);
+                    break;
+                case "12":
+                    month = getString(R.string.dec);
+                    break;
+            }
+            return month + " " + day + ", " + year;
         }
-        return month + " " + day + ", " + year;
+        return date;
     }
 }

@@ -30,5 +30,7 @@
     <string name="home">Home</string>
     <string name="backdrop_image">Backdrop Image</string>
     <string name="insert">Insert title</string>
+    <string name="appwidget_text">My Favourites</string>
+    <string name="empty_text">empty text</string>
 
 </resources>

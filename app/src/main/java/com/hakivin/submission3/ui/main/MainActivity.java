@@ -130,4 +130,6 @@ public class MainActivity extends AppCompatActivity {
     public static String getAPIKey(){
         return BuildConfig.TMDB_API_KEY;
     }
+
+
 }

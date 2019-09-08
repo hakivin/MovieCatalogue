@@ -28,6 +28,8 @@
     <string name="check_internet">Periksa kembali koneksi internet anda</string>
     <string name="search">Cari</string>
     <string name="home">Home</string>
-    <string name="backdrop_image">Backdrop Image</string>
-    <string name="insert">Insert title</string>
+    <string name="backdrop_image">Gambar Backdrop</string>
+    <string name="insert">Masukkan judul</string>
+    <string name="appwidget_text">Favoritku</string>
+    <string name="empty_text">teks kosong</string>
 </resources>

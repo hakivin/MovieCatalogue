@@ -114,9 +114,13 @@ public class DataViewModel extends ViewModel {
         listMovies.postValue(list);
     }
 
-    public void setEmptyTVShow(){
-        ArrayList<TVShow> list = new ArrayList<>();
-        listTV.postValue(list);
+    public void setMoviesFromDB(Context context){
+        MovieHelper helper = MovieHelper.getInstance(context);
+        helper.open();
+        ArrayList<Movie> list = helper.getAllMovies();
+        listMovies.postValue(list);
+        if (list.isEmpty())
+            Toast.makeText(context, context.getString(R.string.empty_list), Toast.LENGTH_LONG).show();
     }
 
     public void setTVShows(){
@@ -191,13 +195,9 @@ public class DataViewModel extends ViewModel {
         });
     }
 
-    public void setMoviesFromDB(Context context){
-        MovieHelper helper = MovieHelper.getInstance(context);
-        helper.open();
-        ArrayList<Movie> list = helper.getAllMovies();
-        listMovies.postValue(list);
-        if (list.isEmpty())
-            Toast.makeText(context, context.getString(R.string.empty_list), Toast.LENGTH_LONG).show();
+    public void setEmptyTVShow(){
+        ArrayList<TVShow> list = new ArrayList<>();
+        listTV.postValue(list);
     }
 
     public void setTVShowsFromDB(Context context){

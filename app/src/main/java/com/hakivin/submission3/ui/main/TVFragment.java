@@ -129,7 +129,8 @@ public class TVFragment extends Fragment {
     @Override
     public void onDestroyOptionsMenu() {
         super.onDestroyOptionsMenu();
-        mViewModel.setTVShows();
+        if (!MainActivity.isIsClicked())
+            mViewModel.setTVShows();
     }
 
     @Override

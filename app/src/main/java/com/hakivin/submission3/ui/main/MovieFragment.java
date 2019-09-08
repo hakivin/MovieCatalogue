@@ -128,7 +128,8 @@ public class MovieFragment extends Fragment {
     @Override
     public void onDestroyOptionsMenu() {
         super.onDestroyOptionsMenu();
-        mViewModel.setMovies();
+        if (!MainActivity.isIsClicked())
+            mViewModel.setMovies();
     }
 
     @Override

@@ -11,9 +11,8 @@ import android.widget.RemoteViewsService;
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.db.WidgetHelper;
 import com.hakivin.submission3.entity.Movie;
+import com.hakivin.submission3.entity.TVShow;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +35,18 @@ public class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFa
     @Override
     public void onDataSetChanged() {
         helper.open();
-        ArrayList<Movie> list = helper.getAllMovies();
-        for (Movie movie : list){
+        ArrayList<Movie> movies = helper.getAllMovies();
+        ArrayList<TVShow> tvShows = helper.getAllTVShows();
+        System.out.println("size = " + movies.size()+tvShows.size());
             try {
-                mWidgetItems.add(BitmapFactory.decodeStream(new java.net.URL(movie.getBackdrop()).openStream()));
+                for (Movie movie : movies){
+                    mWidgetItems.add(BitmapFactory.decodeStream(new java.net.URL(movie.getBackdrop()).openStream()));
+                }
+                for (TVShow tvShow : tvShows){
+                    mWidgetItems.add(BitmapFactory.decodeStream(new java.net.URL(tvShow.getBackdrop()).openStream()));
+                }
             } catch (Exception e) {
                 e.printStackTrace();
-            }
         }
     }
 

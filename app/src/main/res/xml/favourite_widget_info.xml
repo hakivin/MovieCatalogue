@@ -5,5 +5,5 @@
     android:minWidth="250dp"
     android:minHeight="110dp"
     android:previewImage="@drawable/ic_favorite_red_24dp"
-    android:updatePeriodMillis="0"
+    android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen" />

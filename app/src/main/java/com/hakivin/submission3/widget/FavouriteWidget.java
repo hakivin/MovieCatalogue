@@ -3,6 +3,7 @@ package com.hakivin.submission3.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,13 +11,13 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.hakivin.submission3.R;
+import com.hakivin.submission3.ui.main.MainActivity;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class FavouriteWidget extends AppWidgetProvider {
 
-    private static final String TOAST_ACTION = "com.hakivin.submission3.TOAST_ACTION";
     public static final String EXTRA_ITEM = "com.hakivin.submission3.EXTRA_ITEM";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
@@ -26,14 +27,10 @@ public class FavouriteWidget extends AppWidgetProvider {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.favourite_widget);
         views.setRemoteAdapter(R.id.stack_view, intent);
-        views.setEmptyView(R.id.stack_view, R.id.empty_view);
 
-        Intent toastIntent = new Intent(context, FavouriteWidget.class);
-        toastIntent.setAction(FavouriteWidget.TOAST_ACTION);
-        toastIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        PendingIntent toastPendingIntent = PendingIntent.getBroadcast(context, 0, toastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setPendingIntentTemplate(R.id.stack_view, toastPendingIntent);
+        Intent moveIntent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, moveIntent, 0);
+        views.setPendingIntentTemplate(R.id.stack_view, pendingIntent);
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -49,12 +46,6 @@ public class FavouriteWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if (intent.getAction() != null) {
-            if (intent.getAction().equals(TOAST_ACTION)) {
-                int viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
-                Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     @Override

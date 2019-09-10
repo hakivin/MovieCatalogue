@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.hakivin.submission3.BuildConfig;
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.db.MovieHelper;
 import com.hakivin.submission3.db.TVShowHelper;
@@ -27,8 +28,8 @@ import java.util.Objects;
 import cz.msebera.android.httpclient.Header;
 
 public class DataViewModel extends ViewModel {
-    private static final String API = MainActivity.getAPIKey();
-    private static final String NULL_CONDITION = "https://image.tmdb.org/t/p/w500/null";
+    private static final String API = BuildConfig.TMDB_API_KEY;
+    private static final String NULL_CONDITION = BuildConfig.IMG_URL_NULL;
 
     private MutableLiveData<ArrayList<Movie>> listMovies = new MutableLiveData<>();
     private MutableLiveData<ArrayList<TVShow>> listTV = new MutableLiveData<>();
@@ -43,7 +44,7 @@ public class DataViewModel extends ViewModel {
         final ArrayList<Movie> list = new ArrayList<>();
         Locale locale = MainActivity.getContext().getResources().getConfiguration().locale;
         String lang = locale.toLanguageTag();
-        String url = "https://api.themoviedb.org/3/movie/upcoming?api_key="+API+"&language="+lang;
+        String url = BuildConfig.MOVIE_URL+API+"&language="+lang;
 
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -79,7 +80,7 @@ public class DataViewModel extends ViewModel {
         final ArrayList<Movie> list = new ArrayList<>();
         Locale locale = MainActivity.getContext().getResources().getConfiguration().locale;
         String lang = locale.toLanguageTag();
-        String url = "https://api.themoviedb.org/3/search/movie?api_key="+API+"&language="+lang+"&query="+query;
+        String url = BuildConfig.MOVIE_SEARCH_URL+API+"&language="+lang+"&query="+query;
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -89,7 +90,7 @@ public class DataViewModel extends ViewModel {
                     JSONArray res = responseObject.getJSONArray("results");
                     for (int i = 0; i < res.length(); i++){
                         Movie movie = new Movie(res.getJSONObject(i));
-                        if (!movie.getBackdrop().equals(NULL_CONDITION) && !movie.getScore().equals("0.0")) //karena ada movie yang backdropnya null
+                        if (!movie.getBackdrop().equals(NULL_CONDITION)) //karena ada movie yang backdropnya null
                             list.add(movie);
                     }
                     listMovies.postValue(list);
@@ -128,7 +129,7 @@ public class DataViewModel extends ViewModel {
         final ArrayList<TVShow> list = new ArrayList<>();
         Locale locale = MainActivity.getContext().getResources().getConfiguration().locale;
         String lang = locale.toLanguageTag();
-        String url = "https://api.themoviedb.org/3/tv/on_the_air?api_key="+API+"&language="+lang;
+        String url = BuildConfig.TV_URL+API+"&language="+lang;
 
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -139,7 +140,7 @@ public class DataViewModel extends ViewModel {
                     JSONArray res = responseObject.getJSONArray("results");
                     for(int i = 0; i < res.length(); i++){
                         TVShow tvShow = new TVShow(res.getJSONObject(i));
-                        if (!tvShow.getBackdrop().equals(NULL_CONDITION) && !tvShow.getScore().equals("0.0"))
+                        if (!tvShow.getBackdrop().equals(NULL_CONDITION))
                             list.add(tvShow);
                     }
                     listTV.postValue(list);
@@ -164,7 +165,7 @@ public class DataViewModel extends ViewModel {
         final ArrayList<TVShow> list = new ArrayList<>();
         Locale locale = MainActivity.getContext().getResources().getConfiguration().locale;
         String lang = locale.toLanguageTag();
-        String url = "https://api.themoviedb.org/3/search/tv?api_key="+API+"&language="+lang+"&query="+query;
+        String url = BuildConfig.TV_SEARCH_URL+API+"&language="+lang+"&query="+query;
 
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -175,7 +176,7 @@ public class DataViewModel extends ViewModel {
                     JSONArray res = responseObject.getJSONArray("results");
                     for(int i = 0; i < res.length(); i++){
                         TVShow tvShow = new TVShow(res.getJSONObject(i));
-                        if (!tvShow.getBackdrop().equals(NULL_CONDITION) && !tvShow.getScore().equals("0.0"))
+                        if (!tvShow.getBackdrop().equals(NULL_CONDITION))
                             list.add(tvShow);
                     }
                     listTV.postValue(list);

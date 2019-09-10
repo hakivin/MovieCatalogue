@@ -32,5 +32,7 @@
     <string name="insert">Insert title</string>
     <string name="appwidget_text">My Favourites</string>
     <string name="empty_text">empty text</string>
+    <string name="daily_reminder">Don\'t forget to check this app!</string>
+    <string name="release_today_reminder">has been release today!</string>
 
 </resources>

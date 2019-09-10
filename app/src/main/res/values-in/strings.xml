@@ -32,4 +32,6 @@
     <string name="insert">Masukkan judul</string>
     <string name="appwidget_text">Favoritku</string>
     <string name="empty_text">teks kosong</string>
+    <string name="daily_reminder">Jangan lupa buka aplikasi hari ini!</string>
+    <string name="release_today_reminder">rilis hari ini!</string>
 </resources>

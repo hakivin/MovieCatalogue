@@ -19,18 +19,6 @@ import com.hakivin.submission3.R;
 import com.hakivin.submission3.adapter.SectionsPagerAdapter;
 import com.hakivin.submission3.notification.AlarmReceiver;
 import com.hakivin.submission3.viewmodel.DataViewModel;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
@@ -133,41 +121,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setDailyReminder(){
         if (alarmReceiver.isAlarmNotSet(this, AlarmReceiver.ID_DAILY))
-            alarmReceiver.setRepeatingAlarm(this, "07:00", getString(R.string.app_name), getString(R.string.daily_reminder), AlarmReceiver.ID_DAILY);
+            alarmReceiver.setRepeatingAlarm(this, "07:00", AlarmReceiver.ID_DAILY);
     }
 
     private void setReleaseTodayReminder(){
         if (alarmReceiver.isAlarmNotSet(this, AlarmReceiver.ID_RELEASE_TODAY)){
-            Date date = new Date();
-            String fDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date);
-            System.out.println("Date = " + fDate);
-            AsyncHttpClient client = new AsyncHttpClient();
-            final String url = BuildConfig.DISCOVER_MOVIE_URL+getAPIKey()+"&primary_release_date.gte="+fDate
-                    +"&primary_release_date.lte="+fDate+"&with_original_language=en";
-            client.get(url, new AsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    try {
-                        String title = null;
-                        String result = new String(responseBody);
-                        JSONObject responseObject = new JSONObject(result);
-                        JSONArray array = responseObject.getJSONArray("results");
-                        if (!array.isNull(0)){
-                            JSONObject movie = array.getJSONObject(0);
-                            title = movie.getString("title");
-                            alarmReceiver.setRepeatingAlarm(getApplicationContext(), "08:00", title, title+getString(R.string.release_today_reminder), AlarmReceiver.ID_RELEASE_TODAY);
-                        }
-                        System.out.println("title = "+title);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                    error.printStackTrace();
-                }
-            });
+            alarmReceiver.setRepeatingAlarm(getApplicationContext(), "08:00", AlarmReceiver.ID_RELEASE_TODAY);
         }
     }
 

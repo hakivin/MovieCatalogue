@@ -105,9 +105,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         Toast.makeText(context, "Repeating alarm dibatalkan", Toast.LENGTH_SHORT).show();
     }
 
-    public boolean isAlarmSet(Context context, int requestCode) {
+    public boolean isAlarmNotSet(Context context, int requestCode) {
         Intent intent = new Intent(context, AlarmReceiver.class);
-        return PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_NO_CREATE) != null;
+        return PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_NO_CREATE) == null;
     }
 
     public boolean isDateInvalid(String date, String format) {

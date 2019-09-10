@@ -132,12 +132,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDailyReminder(){
-        if (!alarmReceiver.isAlarmSet(this, AlarmReceiver.ID_DAILY))
+        if (alarmReceiver.isAlarmNotSet(this, AlarmReceiver.ID_DAILY))
             alarmReceiver.setRepeatingAlarm(this, "07:00", getString(R.string.app_name), getString(R.string.daily_reminder), AlarmReceiver.ID_DAILY);
     }
 
     private void setReleaseTodayReminder(){
-        if (!alarmReceiver.isAlarmSet(this, AlarmReceiver.ID_RELEASE_TODAY)){
+        if (alarmReceiver.isAlarmNotSet(this, AlarmReceiver.ID_RELEASE_TODAY)){
             Date date = new Date();
             String fDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date);
             System.out.println("Date = " + fDate);

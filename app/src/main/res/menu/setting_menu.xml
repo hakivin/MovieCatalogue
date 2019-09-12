@@ -19,10 +19,14 @@
         android:title="@string/home"
         android:icon="@drawable/ic_home_black_24dp"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/reminder"
+        android:title="@string/reminder_settings"
+        app:showAsAction="never"/>
     <item
         android:id="@+id/setting"
         android:title="@string/action_settings"
-        android:icon="@drawable/ic_settings_white_24dp"
-        app:showAsAction="always"/>
+        app:showAsAction="never"/>
 
 </menu>

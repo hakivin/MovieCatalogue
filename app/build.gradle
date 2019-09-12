@@ -9,13 +9,13 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-        buildConfigField("String" , "TMDB_API_KEY" , '"b650046bf640e7bf7054093854b8d02a"')
-        buildConfigField("String" , "IMG_URL_NULL", '"https://image.tmdb.org/t/p/w500/null"')
-        buildConfigField("String" , "MOVIE_URL", '"https://api.themoviedb.org/3/movie/now_playing?api_key="')
-        buildConfigField("String" , "MOVIE_SEARCH_URL", '"https://api.themoviedb.org/3/search/movie?api_key="')
-        buildConfigField("String" , "TV_URL", '"https://api.themoviedb.org/3/tv/on_the_air?api_key="')
-        buildConfigField("String" , "TV_SEARCH_URL", '"https://api.themoviedb.org/3/search/tv?api_key="')
-        buildConfigField("String" , "DISCOVER_MOVIE_URL", '"https://api.themoviedb.org/3/discover/movie?api_key="')
+        buildConfigField("String", "TMDB_API_KEY", '"b650046bf640e7bf7054093854b8d02a"')
+        buildConfigField("String", "IMG_URL_NULL", '"https://image.tmdb.org/t/p/w500/null"')
+        buildConfigField("String", "MOVIE_URL", '"https://api.themoviedb.org/3/movie/now_playing?api_key="')
+        buildConfigField("String", "MOVIE_SEARCH_URL", '"https://api.themoviedb.org/3/search/movie?api_key="')
+        buildConfigField("String", "TV_URL", '"https://api.themoviedb.org/3/tv/on_the_air?api_key="')
+        buildConfigField("String", "TV_SEARCH_URL", '"https://api.themoviedb.org/3/search/tv?api_key="')
+        buildConfigField("String", "DISCOVER_MOVIE_URL", '"https://api.themoviedb.org/3/discover/movie?api_key="')
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -34,12 +34,10 @@ import cz.msebera.android.httpclient.Header;
 public class AlarmReceiver extends BroadcastReceiver {
     public static String CHANNEL_ID = "channel_01";
     public static CharSequence CHANNEL_NAME = "movie catalogue";
-    public static final String EXTRA_MESSAGE = "message";
-    public static final String EXTRA_TITLE = "title";
     public static final String EXTRA_CODE = "code";
     public static final int ID_DAILY = 100;
     public static final int ID_RELEASE_TODAY = 101;
-
+    private final static String DATE_FORMAT = "yyyy-MM-dd";
     private final static String TIME_FORMAT = "HH:mm";
 
     public AlarmReceiver(){
@@ -51,8 +49,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         int code = intent.getIntExtra(EXTRA_CODE, 0);
         if (code == ID_RELEASE_TODAY){
             Date date = new Date();
-            String fDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date);
-            System.out.println("Date = " + fDate);
+            String fDate = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(date);
             AsyncHttpClient client = new AsyncHttpClient();
             final String url = BuildConfig.DISCOVER_MOVIE_URL+BuildConfig.TMDB_API_KEY+"&primary_release_date.gte="+fDate
                     +"&primary_release_date.lte="+fDate+"&with_original_language=en";
@@ -60,16 +57,15 @@ public class AlarmReceiver extends BroadcastReceiver {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     try {
-                        String title = null;
+                        String title;
                         String result = new String(responseBody);
                         JSONObject responseObject = new JSONObject(result);
                         JSONArray array = responseObject.getJSONArray("results");
-                        if (!array.isNull(0)){
+                        if (!array.isNull(0)){// get the first object from array
                             JSONObject movie = array.getJSONObject(0);
                             title = movie.getString("title");
                             sendNotification(context, title, title+context.getString(R.string.release_today_reminder), AlarmReceiver.ID_RELEASE_TODAY);
                         }
-                        System.out.println("title = "+title);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -132,7 +128,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, 0);
         if (alarmManager != null) {
             System.out.println("setRepeatingAlarm called, getTimeMillis = " + calendar.getTimeInMillis() + "current time = " + new Date().getTime());
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 5000L, pendingIntent);
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
         }
     }
 
@@ -145,8 +141,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);
         }
-
-        Toast.makeText(context, "Repeating alarm dibatalkan", Toast.LENGTH_SHORT).show();
     }
 
     public boolean isAlarmNotSet(Context context, int requestCode) {

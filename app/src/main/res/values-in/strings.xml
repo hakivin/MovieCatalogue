@@ -3,7 +3,7 @@
     <string name="tab_text_1">Film</string>
     <string name="tab_text_2">Acara TV</string>
     <string name="title_activity_detail">DetailActivity</string>
-    <string name="action_settings">Pengaturan</string>
+    <string name="action_settings">Ganti Bahasa</string>
     <string name="release_date">Tanggal Rilis</string>
     <string name="rating">Rating</string>
     <string name="overview">Sinopsis</string>
@@ -31,7 +31,12 @@
     <string name="backdrop_image">Gambar Backdrop</string>
     <string name="insert">Masukkan judul</string>
     <string name="appwidget_text">Favoritku</string>
-    <string name="empty_text">teks kosong</string>
     <string name="daily_reminder">Jangan lupa buka aplikasi hari ini!</string>
     <string name="release_today_reminder">rilis hari ini!</string>
+    <string name="hello_blank_fragment">Pengaturan Pengingat</string>
+    <string name="release_today">Pengingat Rilis Hari Ini</string>
+    <string name="return_daily">Pengingat untuk kembali ke aplikasi</string>
+    <string name="daily_title">Pengingat Harian</string>
+    <string name="release_today_text">Pengingat yang menampilkan film yang rilis hari ini</string>
+    <string name="reminder_settings">Pengaturan Pengingat</string>
 </resources>

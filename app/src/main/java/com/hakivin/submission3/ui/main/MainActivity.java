@@ -11,16 +11,20 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.hakivin.submission3.BuildConfig;
 import com.hakivin.submission3.R;
 import com.hakivin.submission3.adapter.SectionsPagerAdapter;
+import com.hakivin.submission3.entity.Reminder;
 import com.hakivin.submission3.notification.AlarmReceiver;
 import com.hakivin.submission3.viewmodel.DataViewModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ReminderFragment.OnCompleteListener {
     @SuppressLint("StaticFieldLeak")
     private static Context context;
     private static final String EXTRA_STATE = "EXTRA_STATE";
@@ -44,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.app_name);
         alarmReceiver = new AlarmReceiver();
-        setDailyReminder();
-        setReleaseTodayReminder();
         context = this;
         if (savedInstanceState != null){
             isClicked = savedInstanceState.getBoolean(EXTRA_STATE);
@@ -99,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
                 movieDataViewModel.setMovies();
                 TVDataViewModel.setTVShows();
                 break;
+            case R.id.reminder:
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ReminderFragment reminderFragment = ReminderFragment.newInstance();
+                ft.addToBackStack(null);
+                reminderFragment.show(ft, ReminderFragment.class.getSimpleName());
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -109,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
             onFirst = false;
             restart();
         }
-
         super.onResume();
     }
 
@@ -142,8 +149,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    public static String getAPIKey(){
-        return BuildConfig.TMDB_API_KEY;
+    @Override
+    public void onComplete(Reminder reminder) {
+        if (reminder.getDaily())
+            setDailyReminder();
+        else
+            alarmReceiver.cancelAlarm(this, AlarmReceiver.ID_DAILY);
+        if (reminder.getRelease())
+            setReleaseTodayReminder();
+        else
+            alarmReceiver.cancelAlarm(this, AlarmReceiver.ID_RELEASE_TODAY);
     }
-
 }

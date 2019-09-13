@@ -33,7 +33,6 @@
     <string name="appwidget_text">My Favourites</string>
     <string name="daily_reminder">Don\'t forget to check this app!</string>
     <string name="release_today_reminder">has been release today!</string>
-    <string name="hello_blank_fragment">Reminder Setting</string>
     <string name="release_today">Release Today Reminder</string>
     <string name="return_daily">Reminder for return to app</string>
     <string name="daily_title">Daily Reminder</string>

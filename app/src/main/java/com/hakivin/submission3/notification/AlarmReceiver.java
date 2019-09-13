@@ -64,7 +64,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         if (!array.isNull(0)){// get the first object from array
                             JSONObject movie = array.getJSONObject(0);
                             title = movie.getString("title");
-                            sendNotification(context, title, title+context.getString(R.string.release_today_reminder), AlarmReceiver.ID_RELEASE_TODAY);
+                            sendNotification(context, title, title+" "+context.getString(R.string.release_today_reminder), AlarmReceiver.ID_RELEASE_TODAY);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

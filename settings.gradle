@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':favouriteapplication'
 rootProject.name='Submission 3'

@@ -37,7 +37,8 @@
     <string name="release_today">Release Today Reminder</string>
     <string name="return_daily">Reminder for return to app</string>
     <string name="daily_title">Daily Reminder</string>
-    <string name="release_today_text">Reminder showing the movie that release today</string>
+    <string name="release_today_text">Reminder showing the favouriteData that release today</string>
     <string name="reminder_settings">Reminder Settings</string>
+    <string name="stars">stars</string>
 
 </resources>

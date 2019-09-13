@@ -11,6 +11,8 @@ import com.hakivin.submission3.entity.TVShow;
 
 import java.util.ArrayList;
 
+import static android.provider.BaseColumns._ID;
+
 public class TVShowHelper {
     private static final String DATABASE_TABLE = DatabaseContract.TABLE_TV;
     private static DatabaseHelper databaseHelper;
@@ -41,7 +43,7 @@ public class TVShowHelper {
         if (cursor.getCount() > 0){
             do {
                 tvShow = new TVShow();
-                tvShow.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns._ID)));
+                tvShow.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
                 tvShow.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns.TITLE)));
                 tvShow.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns.POSTER)));
                 tvShow.setBackdrop(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.TVColumns.BACKDROP)));
@@ -58,7 +60,7 @@ public class TVShowHelper {
 
     public long insertTVShow(TVShow tvShow){
         ContentValues args = new ContentValues();
-        args.put(DatabaseContract.TVColumns._ID, tvShow.getId());
+        args.put(_ID, tvShow.getId());
         args.put(DatabaseContract.TVColumns.TITLE, tvShow.getTitle());
         args.put(DatabaseContract.TVColumns.POSTER, tvShow.getPoster());
         args.put(DatabaseContract.TVColumns.BACKDROP, tvShow.getBackdrop());
@@ -69,7 +71,7 @@ public class TVShowHelper {
     }
 
     public int deleteTVShow(int id){
-        return database.delete(DATABASE_TABLE, DatabaseContract.TVColumns._ID + " = '" + id + "'", null);
+        return database.delete(DATABASE_TABLE, _ID + " = '" + id + "'", null);
     }
 
     public void open() throws SQLException {
@@ -81,5 +83,37 @@ public class TVShowHelper {
 
         if (database.isOpen())
             database.close();
+    }
+
+    Cursor queryByIdProvider(String id) {
+        return database.query(DATABASE_TABLE, null
+                , _ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
+    }
+
+    Cursor queryProvider() {
+        return database.query(DATABASE_TABLE
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
+    }
+
+    public long insertProvider(ContentValues values) {
+        return database.insert(DATABASE_TABLE, null, values);
+    }
+
+    public int updateProvider(String id, ContentValues values) {
+        return database.update(DATABASE_TABLE, values, _ID + " = ?", new String[]{id});
+    }
+
+    public int deleteProvider(String id) {
+        return database.delete(DATABASE_TABLE, _ID + " = ?", new String[]{id});
     }
 }

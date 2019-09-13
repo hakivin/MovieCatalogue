@@ -19,41 +19,22 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:id="@+id/img_cardview_movie"
+            android:id="@+id/img_favourite"
             android:scaleType="centerCrop"
             tools:src="@color/cardview_dark_background"
-            android:contentDescription="@string/backdrop_image"
-            tools:ignore="PrivateResource" />
+            tools:ignore="PrivateResource"
+            android:contentDescription="@string/image_poster" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_movie_title"
+            android:id="@+id/tv_favourite"
             tools:text="@tools:sample/lorem"
-            android:layout_below="@id/img_cardview_movie"
+            android:layout_below="@id/img_favourite"
             android:layout_marginTop="8dp"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginStart="8dp"/>
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:id="@+id/star"
-            android:src="@drawable/ic_stars_black_24dp"
-            android:layout_below="@id/tv_movie_title"
-            android:layout_marginStart="4dp"
-            android:contentDescription="@string/stars" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_movie_score"
-            tools:text="@tools:sample/lorem"
-            android:layout_below="@id/tv_movie_title"
-            android:layout_toEndOf="@id/star"
-            android:layout_marginStart="4dp"
-            android:textStyle="bold"/>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -1,7 +1,10 @@
 package com.hakivin.submission3.entity;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.hakivin.submission3.db.DatabaseContract;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +33,26 @@ public class TVShow implements Parcelable {
 
     public TVShow() {
 
+    }
+
+    public TVShow(int id, String title, String poster, String backdrop, String score, String firstAirDate, String overview) {
+        this.id = id;
+        this.title = title;
+        this.poster = poster;
+        this.backdrop = backdrop;
+        this.score = score;
+        this.firstAirDate = firstAirDate;
+        this.overview = overview;
+    }
+
+    public TVShow(Cursor cursor){
+        this.id = DatabaseContract.getColumnInt(cursor, DatabaseContract.TVColumns._ID);
+        this.title = DatabaseContract.getColumnString(cursor, DatabaseContract.TVColumns.TITLE);
+        this.poster = DatabaseContract.getColumnString(cursor, DatabaseContract.TVColumns.POSTER);
+        this.backdrop = DatabaseContract.getColumnString(cursor, DatabaseContract.TVColumns.BACKDROP);
+        this.score = DatabaseContract.getColumnString(cursor, DatabaseContract.TVColumns.SCORE);
+        this.firstAirDate = DatabaseContract.getColumnString(cursor, DatabaseContract.TVColumns.FIRST_AIR_DATE);
+        this.overview = DatabaseContract.getColumnString(cursor, DatabaseContract.TVColumns.OVERVIEW);
     }
 
     public int getId() {
@@ -104,7 +127,7 @@ public class TVShow implements Parcelable {
         dest.writeString(this.overview);
     }
 
-    protected TVShow(Parcel in) {
+    private TVShow(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
         this.poster = in.readString();

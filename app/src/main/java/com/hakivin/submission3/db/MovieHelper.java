@@ -11,6 +11,8 @@ import com.hakivin.submission3.entity.Movie;
 
 import java.util.ArrayList;
 
+import static android.provider.BaseColumns._ID;
+
 public class MovieHelper {
     private static final String DATABASE_TABLE = DatabaseContract.TABLE_MOVIE;
     private static DatabaseHelper databaseHelper;
@@ -41,7 +43,7 @@ public class MovieHelper {
             cursor.moveToFirst();
             do {
                 movie = new Movie();
-                movie.setId(cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns._ID)));
+                movie.setId(cursor.getInt(cursor.getColumnIndexOrThrow(_ID)));
                 movie.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns.TITLE)));
                 movie.setPoster(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns.POSTER)));
                 movie.setBackdrop(cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.MovieColumns.BACKDROP)));
@@ -58,7 +60,7 @@ public class MovieHelper {
 
     public long insertMovie(Movie movie){
         ContentValues args = new ContentValues();
-        args.put(DatabaseContract.MovieColumns._ID, movie.getId());
+        args.put(_ID, movie.getId());
         args.put(DatabaseContract.MovieColumns.TITLE, movie.getTitle());
         args.put(DatabaseContract.MovieColumns.POSTER, movie.getPoster());
         args.put(DatabaseContract.MovieColumns.BACKDROP, movie.getBackdrop());
@@ -69,7 +71,7 @@ public class MovieHelper {
     }
 
     public int deleteMovie(int id){
-        return database.delete(DATABASE_TABLE, DatabaseContract.MovieColumns._ID + " = '" + id + "'", null);
+        return database.delete(DATABASE_TABLE, _ID + " = '" + id + "'", null);
     }
 
     public void open() throws SQLException{
@@ -81,5 +83,37 @@ public class MovieHelper {
 
         if (database.isOpen())
             database.close();
+    }
+
+    Cursor queryByIdProvider(String id) {
+        return database.query(DATABASE_TABLE, null
+                , _ID + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
+    }
+
+    Cursor queryProvider() {
+        return database.query(DATABASE_TABLE
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
+    }
+
+    public long insertProvider(ContentValues values) {
+        return database.insert(DATABASE_TABLE, null, values);
+    }
+
+    public int updateProvider(String id, ContentValues values) {
+        return database.update(DATABASE_TABLE, values, _ID + " = ?", new String[]{id});
+    }
+
+    public int deleteProvider(String id) {
+        return database.delete(DATABASE_TABLE, _ID + " = ?", new String[]{id});
     }
 }

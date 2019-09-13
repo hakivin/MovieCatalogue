@@ -39,4 +39,5 @@
     <string name="daily_title">Pengingat Harian</string>
     <string name="release_today_text">Pengingat yang menampilkan film yang rilis hari ini</string>
     <string name="reminder_settings">Pengaturan Pengingat</string>
+    <string name="stars">stars</string>
 </resources>

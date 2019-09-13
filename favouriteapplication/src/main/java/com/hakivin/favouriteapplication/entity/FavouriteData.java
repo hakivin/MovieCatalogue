@@ -1,15 +1,12 @@
-package com.hakivin.submission3.entity;
+package com.hakivin.favouriteapplication.entity;
 
 import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.hakivin.submission3.db.DatabaseContract;
+import com.hakivin.favouriteapplication.db.DatabaseContract;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class Movie implements Parcelable {
+public class FavouriteData implements Parcelable {
     private int id;
     private String title;
     private String poster;
@@ -18,37 +15,11 @@ public class Movie implements Parcelable {
     private String releaseDate;
     private String overview;
 
-    public Movie(JSONObject object) {
-        String baseUrl = "https://image.tmdb.org/t/p/";
-        String imgSize = "w500/";
-        try {
-            this.id = object.getInt("id");
-            this.title = object.getString("title");
-            this.poster = baseUrl + imgSize + object.getString("poster_path");
-            this.backdrop = baseUrl + imgSize + object.getString("backdrop_path");
-            this.score = String.valueOf(object.getDouble("vote_average"));
-            this.releaseDate = object.getString("release_date");
-            this.overview = object.getString("overview");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Movie() {
+    public FavouriteData() {
 
     }
 
-    public Movie(int id, String title, String poster, String backdrop, String score, String releaseDate, String overview) {
-        this.id = id;
-        this.title = title;
-        this.poster = poster;
-        this.backdrop = backdrop;
-        this.score = score;
-        this.releaseDate = releaseDate;
-        this.overview = overview;
-    }
-
-    public Movie(Cursor cursor){
+    public FavouriteData(Cursor cursor){
         this.id = DatabaseContract.getColumnInt(cursor, DatabaseContract.MovieColumns._ID);
         this.title = DatabaseContract.getColumnString(cursor, DatabaseContract.MovieColumns.TITLE);
         this.poster = DatabaseContract.getColumnString(cursor, DatabaseContract.MovieColumns.POSTER);
@@ -131,7 +102,7 @@ public class Movie implements Parcelable {
         dest.writeString(this.overview);
     }
 
-    private Movie(Parcel in) {
+    private FavouriteData(Parcel in) {
         this.id = in.readInt();
         this.title = in.readString();
         this.poster = in.readString();
@@ -141,15 +112,15 @@ public class Movie implements Parcelable {
         this.overview = in.readString();
     }
 
-    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+    public static final Parcelable.Creator<FavouriteData> CREATOR = new Parcelable.Creator<FavouriteData>() {
         @Override
-        public Movie createFromParcel(Parcel source) {
-            return new Movie(source);
+        public FavouriteData createFromParcel(Parcel source) {
+            return new FavouriteData(source);
         }
 
         @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
+        public FavouriteData[] newArray(int size) {
+            return new FavouriteData[size];
         }
     };
 }

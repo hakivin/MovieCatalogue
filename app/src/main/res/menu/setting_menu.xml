@@ -13,7 +13,7 @@
         android:id="@+id/favourites"
         android:title="@string/favorite"
         android:icon="@drawable/ic_favorite_red_24dp"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/home"
         android:title="@string/home"
